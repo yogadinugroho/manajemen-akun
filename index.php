@@ -1,3 +1,64 @@
+<?php 
+
+session_start();
+
+$conn = mysqli_connect("localhost", "root", "", "2197101034");
+
+    if(isset($_POST["login"])) {
+
+        // ambil data dari form
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+
+        if( $username == "admin" AND $password == "admin" ){
+            $_SESSION["login"] = true;
+            header("Location: admin/index.php");
+
+        } else {
+            // ambil data dari form
+            $username = $_POST["username"];
+            $password = $_POST["password"];
+
+            // mengecek apakah username yang diinputkan sama dengan yang ada pada database
+            $result = mysqli_query($conn, " SELECT * FROM tabel_login
+                    WHERE username = '$username' ");
+                    
+                if(mysqli_num_rows($result) == 1 ) {
+
+                    $row = mysqli_fetch_assoc($result);
+                    
+                    // balikin hashnya jadi karakter biasa
+                    // memastikan bahwa password yang diinputkan dan di dalam tabel login sudah match
+
+                    if(password_verify($password, $row["password"])){
+
+                        // set session
+                        $_SESSION["login"] = $row;
+
+                        if($row["status"] == 1){
+
+                        header("Location: mahasiswa/index.php");
+                        exit;
+
+                        } elseif ($row["status"] == 2) {
+                        header("Location: dosen/index.php");
+                        exit;
+
+                        } else {
+                        header("Location: index.php");
+                        exit;
+                        }
+                
+                    }
+                $error = true;
+            }
+
+        }
+    } 
+
+
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">

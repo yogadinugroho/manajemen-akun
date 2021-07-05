@@ -16,4 +16,10 @@ function query($query) {
 }
 
 
+function hapus($nim) {
+    global $conn;
+    mysqli_query($conn, "DELETE FROM tabel_biodata_mahasiswa WHERE nim = $nim");
+    return mysqli_affected_rows($conn);
+}
+
 ?>

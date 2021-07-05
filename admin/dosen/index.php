@@ -1,4 +1,19 @@
 
+<?php
+
+session_start();
+
+require 'functions.php';
+
+if(!isset($_SESSION["login"])){
+    header("Location: ../../index.php");
+    exit;
+}
+
+$mahasiswa = query("SELECT * FROM tabel_biodata_dosen");
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>

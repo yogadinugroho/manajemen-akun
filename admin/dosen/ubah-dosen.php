@@ -1,3 +1,45 @@
+<?php 
+
+session_start();
+
+require 'functions.php';
+
+if(!isset($_SESSION["login"])){
+    header("Location: ../../index.php");
+    exit;
+}
+
+// ambil data di URL 
+$nip = $_GET["nip"];
+
+$dosen = query(" SELECT * FROM tabel_biodata_dosen WHERE nip = $nip")[0];
+
+if( isset($_POST["submit"]) ) {
+
+    // cek apakah data berhasil diubah atau tidak
+    // menggunakn funcion ubah()
+    
+    if( ubah($_POST) > 0 ) {
+        echo "
+            <script>
+                alert('data berhasil diubah!');
+                document.location.href = 'index.php';
+            </script>
+        ";
+    } else {
+        echo "
+            <script>
+            alert('data gagal diubah!');
+            document.location.href = 'index.php';
+            </script>
+        ";
+    }
+
+}
+
+
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">

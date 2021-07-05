@@ -10,3 +10,7 @@ fitur - fiturnya
 - hak akses penuh untuk admin
 
 website ini dibuat dengan menggunakan PHP dan Bootstrap
+
+# Usage
+
+buat database di phpmyadmin dan import file 2197101034 ke dalam database anda

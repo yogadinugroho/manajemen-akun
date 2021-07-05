@@ -15,4 +15,11 @@ function query($query) {
     return $rows;
 }
 
+function hapus($nip) {
+    global $conn;
+    mysqli_query($conn, "DELETE FROM tabel_biodata_dosen WHERE nip = $nip");
+    return mysqli_affected_rows($conn);
+}
+
+
 ?

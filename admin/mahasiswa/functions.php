@@ -100,4 +100,37 @@ function upload() {
     return $namaFileBaru;
 }
 
+
+function ubah($data){
+    global $conn;
+    $nim = $data["nim"];
+    
+    // ambil data dari tiap elemen dalam form
+    $nama = htmlspecialchars($data["nama"]);
+    $email = htmlspecialchars($data["email"]);
+    $gambarLama = htmlspecialchars($data["gambarLama"]);
+
+    // mengecek apakah user memilih gambar baru atau tidak
+    if( $_FILES['gambar']['error'] === 4 ) {
+        $gambar = $gambarLama;
+    } else {
+        $gambar = upload();
+    }
+
+    // query untuk memasukkan data ke database
+    $query = "UPDATE tabel_biodata_mahasiswa SET 
+                nim ='$nim',
+                nama = '$nama',    
+                email = '$email',
+                gambar_profil = '$gambar'
+                WHERE nim = $nim
+            ";
+
+    // jalankan querynya
+    mysqli_query($conn, $query);    
+
+    // kembalikan data ketika ada yang berhasil diupdate
+    return mysqli_affected_rows($conn);
+}
+
 ?>

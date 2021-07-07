@@ -1,3 +1,19 @@
+<?php 
+
+session_start();
+
+if(!isset($_SESSION["login"])){
+    header("Location: ../../index.php");
+    exit;
+}
+
+require 'functions.php';
+
+$login = query("SELECT * FROM tabel_login");
+
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">

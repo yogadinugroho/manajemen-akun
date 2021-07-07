@@ -21,4 +21,31 @@ function hapus($username) {
     return mysqli_affected_rows($conn);
 }
 
+function ubah($data){
+    global $conn;
+    $username = $data["username"];
+    
+    // ambil data dari tiap elemen dalam form
+    $username = htmlspecialchars($data["username"]);
+    $passwordmentahan = htmlspecialchars($data["password"]);
+    $status = htmlspecialchars($data["status"]);
+
+    //  enkripsi passwordnya
+    $password = password_hash($passwordmentahan, PASSWORD_DEFAULT);
+
+    // query untuk memasukkan data ke database
+    $query = "UPDATE tabel_login SET 
+                username ='$username',
+                password = '$password',    
+                status = '$status'
+                WHERE username = $username
+            ";
+
+    // jalankan querynya
+    mysqli_query($conn, $query);    
+
+    // kembalikan data ketika ada yang berhasil diupdate
+    return mysqli_affected_rows($conn);
+}
+
 ?>

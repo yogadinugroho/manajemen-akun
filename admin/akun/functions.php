@@ -15,4 +15,10 @@ function query($query) {
     return $rows;
 }
 
+function hapus($username) {
+    global $conn;
+    mysqli_query($conn, "DELETE FROM tabel_login WHERE username = $username");
+    return mysqli_affected_rows($conn);
+}
+
 ?>

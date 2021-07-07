@@ -1,3 +1,52 @@
+<?php 
+
+session_start();
+
+require 'functions.php';
+
+if(!isset($_SESSION["login"])){
+    header("Location: ../../index.php");
+    exit;
+}
+
+$result1 = mysqli_query( $conn, "SELECT * FROM tabel_biodata_mahasiswa");
+$result2 = mysqli_query( $conn, "SELECT * FROM tabel_biodata_dosen");
+
+
+if(isset($_POST["submit"])) {
+
+    $nim_nip = $_POST["nim_nip"];
+    $passwordbelumdienkripsi = $_POST["password"];
+    
+    //  enkripsi passwordnya
+    $password = password_hash($passwordbelumdienkripsi, PASSWORD_DEFAULT);
+
+    // pecah untuk mendapatkan kata mahasiswa
+    $pecah = explode('.', $nim_nip);
+
+    // mendapatkan data nimnya
+    $username = $pecah[0];
+
+    // mendapatkan statusnya
+    $statusnya = $pecah[1]; 
+
+
+    if ($statusnya == "mahasiswa"){
+        $status = 1;
+    } elseif ($statusnya == "dosen"){
+        $status = 2;
+    } else {
+        $status = 0;
+    }
+
+
+    mysqli_query($conn, "INSERT INTO tabel_login (username, password, status) VALUES ('$username', '$password', '$status')");
+
+    header("Location: index.php");
+    exit;
+}
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">

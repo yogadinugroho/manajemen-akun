@@ -1,3 +1,44 @@
+<?php 
+
+session_start();  
+
+if(!isset($_SESSION["login"])){
+    header("Location: ../index.php");
+    exit;
+}
+
+require 'functions.php';
+
+// ambil data di URL 
+$nim = $_GET["nim"];
+
+$mhs = query(" SELECT * FROM tabel_biodata_mahasiswa WHERE nim = $nim")[0];
+
+if( isset($_POST["submit"]) ) {
+
+    // cek apakah data berhasil diubah atau tidak
+    // menggunakn funcion ubah()
+    
+    if( ubah($_POST) > 0 ) {
+        echo "
+            <script>
+                alert('data berhasil diubah!');
+                document.location.href = 'manajemen-mahasiswa.php';
+            </script>
+        ";
+    } else {
+        echo "
+            <script>
+            alert('data gagal diubah!');
+            document.location.href = 'manajemen-mahasiswa.php';
+            </script>
+        ";
+    }
+
+}
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
